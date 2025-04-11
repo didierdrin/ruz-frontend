@@ -32,7 +32,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const cartContextValue = {
-    cartItems,
+    cartItems: cartItems || [],
     shippingAddress,
     paymentMethod,
     addToCart: addToCartHandler,

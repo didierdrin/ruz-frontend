@@ -11,27 +11,32 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
+
 import authReducer from './features/auth/authSlice';
 import cartReducer from './features/cart/cartSlice';
 import productReducer from './features/product/productSlice';
 import orderReducer from './features/order/orderSlice';
-import userReducer from './features/user/userSlice';
 import chatReducer from './features/chat/chatSlice';
+
+// ✅ Import your RTK Query API slice
+import { userApiSlice } from './features/user/userSlice'; // This file should use createApi now
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   product: productReducer,
   order: orderReducer,
-  user: userReducer,
   chat: chatReducer,
+  
+  // ✅ RTK Query reducer goes here
+  [userApiSlice.reducerPath]: userApiSlice.reducer,
 });
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['auth', 'cart'],
+  whitelist: ['auth', 'cart'], // only persist what’s needed
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -43,7 +48,62 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(userApiSlice.middleware), // ✅ Add middleware for RTK Query
 });
 
 export const persistor = persistStore(store);
+
+
+// import { configureStore } from '@reduxjs/toolkit';
+// import { combineReducers } from 'redux';
+// import {
+//   persistStore,
+//   persistReducer,
+//   FLUSH,
+//   REHYDRATE,
+//   PAUSE,
+//   PERSIST,
+//   PURGE,
+//   REGISTER,
+// } from 'redux-persist';
+// import storage from 'redux-persist/lib/storage';
+// import authReducer from './features/auth/authSlice';
+// import cartReducer from './features/cart/cartSlice';
+// import productReducer from './features/product/productSlice';
+// import orderReducer from './features/order/orderSlice';
+// import { userApiSlice } from './features/user/userSlice';
+// import chatReducer from './features/chat/chatSlice';
+
+// const rootReducer = combineReducers({
+//   auth: authReducer,
+//   cart: cartReducer,
+//   product: productReducer,
+//   order: orderReducer,
+//   user: userReducer,
+//   chat: chatReducer,
+// });
+
+// const persistConfig = {
+//   key: 'root',
+//   version: 1,
+//   storage,
+//   whitelist: ['auth', 'cart'],
+// };
+
+// const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+// export const store = configureStore({
+//   // reducer: persistedReducer,
+//   reducer: {
+//     // your other reducers
+//     [userApiSlice.reducerPath]: userApiSlice.reducer,
+//   },
+//   middleware: (getDefaultMiddleware) =>
+//     getDefaultMiddleware({
+//       serializableCheck: {
+//         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+//       },
+//     }),
+// });
+
+// export const persistor = persistStore(store);

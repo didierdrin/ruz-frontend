@@ -3,9 +3,9 @@ import { FaShoppingCart, FaUser, FaSearch, FaMoon, FaSun } from 'react-icons/fa'
 import { useTheme } from '../../context/ThemeContext';
 import { useCart } from '../../context/CartContext';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCredentials } from '../../features/auth/authSlice';
+import { logout } from '../../features/auth/authSlice';
 import SearchBox from '../products/SearchBox';
-// import Dropdown from './Dropdown';
+import Dropdown from './Dropdown';
 
 const Header = () => {
   const { darkMode, toggleDarkMode } = useTheme();
@@ -48,11 +48,18 @@ const Header = () => {
               className="relative p-2 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
             >
               <FaShoppingCart className="text-gray-600 dark:text-gray-300" />
-              {cartItems.length > 0 && (
+              {/* {cartItems.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                   {cartItems.reduce((acc, item) => acc + item.qty, 0)}
                 </span>
-              )}
+              )} */}
+
+{Array.isArray(cartItems) && cartItems.length > 0 && (
+  <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+    {cartItems.reduce((acc, item) => acc + item.qty, 0)}
+  </span>
+)}
+
             </Link>
 
             {userInfo ? (
