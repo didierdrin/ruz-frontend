@@ -1,11 +1,11 @@
-import { createContext, useContext, useEffect } from 'react';
+import { createContext, useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import {
-//   addToCart,
-//   removeFromCart,
-//   saveShippingAddress,
-//   savePaymentMethod,
-// } from '../features/cart/cartSlice';
+import {
+  addToCart,
+  removeFromCart,
+  saveShippingAddress,
+  savePaymentMethod,
+} from '../features/cart/cartSlice';
 
 const CartContext = createContext();
 

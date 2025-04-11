@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import FormContainer from '../../components/common/FormContainer';
 import Loader from '../../components/common/Loader';
 import { useGetUserDetailsQuery, useUpdateUserProfileMutation } from '../../features/user/userSlice';
 import { setCredentials } from '../../features/auth/authSlice';
+import Message from '../../components/common/Message';
 
 const ProfileScreen = () => {
   const [name, setName] = useState('');

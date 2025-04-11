@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import Product from './Product';
 import Loader from '../common/Loader';

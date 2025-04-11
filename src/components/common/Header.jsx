@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { FaShoppingCart, FaUser, FaSearch, FaMoon, FaSun } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaMoon, FaSun } from 'react-icons/fa';
 import { useTheme } from '../../context/ThemeContext';
 import { useCart } from '../../context/CartContext';
 import { useDispatch, useSelector } from 'react-redux';

@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, ListGroup, Row, Col, Card, Alert } from 'react-bootstrap';
+import { Button, ListGroup, Row, Col, Card } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../../components/common/Message';
-//import CheckoutSteps from '../../components/orders/CheckoutSteps';
-//import { createOrder } from '../../features/order/orderSlice';
+import CheckoutSteps from './CheckoutSteps';
+import { useCreateOrderMutation } from '../../features/order/orderSlice';
 
 const PlaceOrderScreen = () => {
   const dispatch = useDispatch();
@@ -24,6 +24,7 @@ const PlaceOrderScreen = () => {
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
+  const [createOrder, { isLoading }] = useCreateOrderMutation();
 
   useEffect(() => {
     if (success) {
@@ -32,19 +33,25 @@ const PlaceOrderScreen = () => {
     // eslint-disable-next-line
   }, [navigate, success]);
 
-  const placeOrderHandler = () => {
-    dispatch(
-      createOrder({
-        orderItems: cartItems,
-        shippingAddress,
-        paymentMethod,
-        itemsPrice,
-        shippingPrice,
-        taxPrice,
-        totalPrice,
-      })
-    );
-  };
+  
+const placeOrderHandler = async () => {
+  try {
+    const res = await createOrder({
+      orderItems: cartItems,
+      shippingAddress,
+      paymentMethod,
+      itemsPrice,
+      taxPrice,
+      shippingPrice,
+      totalPrice,
+    }).unwrap();
+
+    navigate(`/order/${res._id}`);
+  } catch (err) {
+    console.error('Order creation failed:', err?.data?.message || err.message);
+    //toast(err?.data?.message || err.message);
+  }
+};
 
   return (
     <>

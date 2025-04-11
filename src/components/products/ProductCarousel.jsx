@@ -1,4 +1,4 @@
-// import { useGetTopProductsQuery } from '../../features/product/productApiSlice';
+import { useGetTopProductsQuery } from '../../features/product/productSlice';
 import { Carousel, Image } from 'react-bootstrap';
 import Message from '../common/Message';
 import { Link } from 'react-router-dom';

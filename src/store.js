@@ -15,20 +15,19 @@ import storage from 'redux-persist/lib/storage';
 import authReducer from './features/auth/authSlice';
 import cartReducer from './features/cart/cartSlice';
 import productReducer from './features/product/productSlice';
-import orderReducer from './features/order/orderSlice';
 import chatReducer from './features/chat/chatSlice';
 
 // ✅ Import your RTK Query API slice
 import { userApiSlice } from './features/user/userSlice'; // This file should use createApi now
+import { orderApiSlice } from './features/order/orderSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
   product: productReducer,
-  order: orderReducer,
   chat: chatReducer,
-  
   // ✅ RTK Query reducer goes here
+  [orderApiSlice.reducerPath]: orderApiSlice.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
 });
 
