@@ -11,24 +11,23 @@ import {
   REGISTER,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-
 import authReducer from './features/auth/authSlice';
 import cartReducer from './features/cart/cartSlice';
-import productReducer from './features/product/productSlice';
 import chatReducer from './features/chat/chatSlice';
 
 // ✅ Import your RTK Query API slice
 import { userApiSlice } from './features/user/userSlice'; // This file should use createApi now
 import { orderApiSlice } from './features/order/orderSlice';
+import { productApi } from './features/product/productSlice'; 
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
-  product: productReducer,
   chat: chatReducer,
   // ✅ RTK Query reducer goes here
   [orderApiSlice.reducerPath]: orderApiSlice.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
+  [productApi.reducerPath]: productApi.reducer,
 });
 
 const persistConfig = {
@@ -47,7 +46,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApiSlice.middleware), // ✅ Add middleware for RTK Query
+    }).concat(productApi.middleware), // ✅ Add middleware for RTK Query
 });
 
 export const persistor = persistStore(store);
