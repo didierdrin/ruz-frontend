@@ -1,9 +1,9 @@
 import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-//import AdminLinks from '../../components/admin/AdminLinks';
-//import { useGetOrdersQuery } from '../../features/order/orderApiSlice';
-//import { useGetProductsQuery } from '../../features/product/productApiSlice';
-//import { useGetUsersQuery } from '../../features/user/userApiSlice';
+import AdminLinks from '../../components/admin/AdminLinks';
+import { useGetOrdersQuery } from '../../features/order/orderSlice';
+import { useGetProductsQuery } from '../../features/product/productSlice';
+import { useGetUsersQuery } from '../../features/user/userSlice';
 import Meta from '../../components/common/Meta';
 
 const AdminScreen = () => {

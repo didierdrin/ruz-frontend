@@ -1,4 +1,3 @@
-// src/features/order/orderApiSlice.js
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const orderApiSlice = createApi({
@@ -21,16 +20,22 @@ export const orderApiSlice = createApi({
     }),
 
     payOrder: builder.mutation({
-      query: ({ orderId, paymentResult }) => ({
+      query: ({ orderId, details }) => ({
         url: `/orders/${orderId}/pay`,
         method: 'PUT',
-        body: paymentResult,
+        body: details,
       }),
       invalidatesTags: ['Order'],
     }),
 
     getMyOrders: builder.query({
       query: () => '/orders/myorders',
+      providesTags: ['Order'],
+    }),
+
+    // ✅ Add this
+    getOrders: builder.query({
+      query: () => '/orders',
       providesTags: ['Order'],
     }),
   }),
@@ -41,8 +46,11 @@ export const {
   useGetOrderByIdQuery,
   usePayOrderMutation,
   useGetMyOrdersQuery,
+  useGetOrdersQuery, // ✅ Now you can import this in AdminScreen
 } = orderApiSlice;
 
+// Optional alias if needed
+export const useGetOrderDetailsQuery = useGetOrderByIdQuery;
 
 
 // import { createSlice } from '@reduxjs/toolkit';

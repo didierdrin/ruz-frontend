@@ -18,7 +18,8 @@ import chatReducer from './features/chat/chatSlice';
 // ✅ Import your RTK Query API slice
 import { userApiSlice } from './features/user/userSlice'; // This file should use createApi now
 import { orderApiSlice } from './features/order/orderSlice';
-import { productApi } from './features/product/productSlice'; 
+import { productApi, productCreateReducer, productDetailsReducer } from './features/product/productSlice'; 
+import { paypalApiSlice } from './features/paypal/paypalSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -27,7 +28,10 @@ const rootReducer = combineReducers({
   // ✅ RTK Query reducer goes here
   [orderApiSlice.reducerPath]: orderApiSlice.reducer,
   [userApiSlice.reducerPath]: userApiSlice.reducer,
+  [paypalApiSlice.reducerPath]: paypalApiSlice.reducer,
   [productApi.reducerPath]: productApi.reducer,
+  productDetails: productDetailsReducer,
+  productCreate: productCreateReducer,
 });
 
 const persistConfig = {
@@ -46,7 +50,11 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(productApi.middleware), // ✅ Add middleware for RTK Query
+    })
+    .concat(productApi.middleware)
+    .concat(orderApiSlice.middleware)
+    .concat(userApiSlice.middleware)
+    .concat(paypalApiSlice.middleware),// ✅ Add middleware for RTK Query
 });
 
 export const persistor = persistStore(store);
